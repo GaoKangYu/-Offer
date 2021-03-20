@@ -2,7 +2,7 @@
 ```
 “正因为我身边的人都如此努力，我才能得以改变”
 ```
-基于[LeetCode](https://leetcode-cn.com/problemset/lcof/)，包含《剑指offer》（第二版）所有题目题解，IDE为Visual Studio 2017，为完整可运行的.sln。
+基于[LeetCode](https://leetcode-cn.com/problemset/lcof/)，包含《剑指offer》（第二版）所有题目题解，按照出现频率排序，IDE为Visual Studio 2017，为完整可运行的.sln。
 
 ## 文件结构
 
