@@ -1,6 +1,6 @@
 # RNG(2018 Ltd)-Offer
 ```
-“正因为我身边的人都如此努力，我才能得以改变”
+“正因为有你的存在，我才能得以改变”
 ```
 基于[LeetCode](https://leetcode-cn.com/problemset/lcof/)，包含《剑指offer》（第二版）所有题目题解，按照出现频率排序，IDE为Visual Studio 2017，为完整可运行的.sln，代码调试与运行主要在LeetCode平台，因此可能没有生成.exe文件。
 
