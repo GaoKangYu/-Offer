@@ -29,15 +29,20 @@ public:
 			strStream << n;
 			//转string
 			string s = strStream.str();
+			bool yep = false;
 			//清空缓冲区，很重要
+			if (yep && is_palindrome(s)){
+				yep = true;
+			}
 			strStream.str("");
 			//开三次方，1.0而不是1
 			strStream << pow(n,1.0 / 3);
 			string s_3 = strStream.str();
 			strStream.str("");
-			if (is_palindrome(s) && is_palindrome(s_3)){
+			if (yep && is_palindrome(s_3)){
 				ret.push_back(n);
 			}
+			yep = false;
 		}
 		return ret;
 	}
