@@ -1,0 +1,3 @@
+﻿  cubic_palindrome.cpp
+f:\【0】daily\【0】c++\nana\cubic_palindrome\cubic_palindrome\cubic_palindrome.cpp(40): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+  cubic_palindrome.vcxproj -> F:\【0】Daily\【0】c++\nana\cubic_palindrome\x64\Debug\cubic_palindrome.exe
