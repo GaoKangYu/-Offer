@@ -55,6 +55,7 @@ description
 			//清空缓冲区，很重要
 			strStream.str("");
 			//开三次方，1.0而不是1
+			strStream << pow(n, 1.0 / 3);
 ...
 ```
 
