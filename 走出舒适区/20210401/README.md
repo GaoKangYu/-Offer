@@ -29,7 +29,7 @@ TBD
 ```
 去失败，去面对
 ```
-#### 为什么要用指针要用引用，为什么直接用对象？
+- 为什么要用指针要用引用，为什么不直接用对象？
 
 **为了节省性能开销，传递对象需要拷贝它本身，传递指针或者引用操作的只是地址，32位机上4byte，64位机上8byte，而对象可能比较庞大，开销不在于构造与析构，在于赋值与传递。**
 
@@ -111,10 +111,17 @@ public:
 	~Solution() {
 		printf("析构了一个Solution类\n");
 	}
-  //混淆重写与重载的定义，最初是想使用纯虚函数，子类重写show_result，但是因为######
-  //后来想通过模板类让子类重写，发生在类间的重写需要所有参数一致，只是重写实现，实际上应该用重定义实现，
-	template<typename T> void show_result(T val) {
-
+  //混淆重写与重载的定义，最初是想尝试使用纯虚函数，子类重写show_result，但是报错“不允许使用抽象类类型"vector_int_Solution"的对象:纯虚拟函数"Solution:show_result”没有强制替代项”
+  //因为使用了纯虚函数，因此父类变成了抽象类，继承了父类的子类，是可以访问父类的函数的，因此，如果需要实例化一个子类，需要实现其父类的全部纯虚函数，否则子类也会变成抽象类
+  //困惑在于，为什么virtual void show_name() = 0没有报错，而void show_result() = 0报错？
+  //解答如下：声明了纯虚函数的父类，其子类需要实现该纯虚函数，实现，而不是重写，需要同名同参数同返回值并完成具体函数体，否则视为未实现。我把这问题当做了重写。
+  //甚至尝试了模板类
+	//template<typename T> void show_result(T val) {
+	//
+	//};
+	//所以纯虚函数的使用需谨慎，它应当是通用函数，而不是子类特有
+	virtual void show_result() {
+		printf("show name.\n");
 	};
 	//pure virtual
 	virtual void show_name() = 0;
@@ -229,6 +236,11 @@ int main() {
 	vector<int> input_vec;
 	input_vec = vec_int_solu.input();
 ```
+
 - ACM模式下，遇到回车完成输入，int、string、vector<int>分别的实现。
 - 基于前序中序后序遍历完成二叉树的建立与可视化
 - 链表的实现与典型题
+
+## 知识点总结
+
+1、
