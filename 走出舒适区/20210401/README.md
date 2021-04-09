@@ -111,10 +111,13 @@ public:
 	~Solution() {
 		printf("析构了一个Solution类\n");
 	}
-  //混淆重写与重载的定义，最初是想尝试使用纯虚函数，子类重写show_result，但是报错“不允许使用抽象类类型"vector_int_Solution"的对象:纯虚拟函数"Solution:show_result”没有强制替代项”
-  //因为使用了纯虚函数，因此父类变成了抽象类，继承了父类的子类，是可以访问父类的函数的，因此，如果需要实例化一个子类，需要实现其父类的全部纯虚函数，否则子类也会变成抽象类
+  //混淆重写与重载的定义，最初是想尝试使用纯虚函数，子类重写show_result，
+  //但是报错“不允许使用抽象类类型"vector_int_Solution"的对象:纯虚拟函数"Solution:show_result”没有强制替代项”
+  //因为使用了纯虚函数，因此父类变成了抽象类，继承了父类的子类，是可以访问父类的函数的，
+  //因此，如果需要实例化一个子类，需要实现其父类的全部纯虚函数，否则子类也会变成抽象类
   //困惑在于，为什么virtual void show_name() = 0没有报错，而void show_result() = 0报错？
-  //解答如下：声明了纯虚函数的父类，其子类需要实现该纯虚函数，实现，而不是重写，需要同名同参数同返回值并完成具体函数体，否则视为未实现。我把这问题当做了重写。
+  //解答如下：声明了纯虚函数的父类，其子类需要实现该纯虚函数，实现，而不是重写，
+  //需要同名同参数同返回值并完成具体函数体，否则视为未实现。我把这问题当做了重写。
   //甚至尝试了模板类
 	//template<typename T> void show_result(T val) {
 	//
@@ -143,16 +146,19 @@ public:
 
 	virtual void show_result(string str) {
 		printf("Result : ");
-		//printf("%s\n", str),这个方法属于C语言，而C是没有string类的，于是无法使用printf直接输出string，改为cout
-		//此外，cout其实也不能直接输出string，包含头文件<string>后，实质上是重载了运算符“<<”，使得其支持string，说明本质上，string不是基本类型，c++基于c
+		//printf("%s\n", str),这个方法属于C语言，而C是没有string类的，
+		//于是无法使用printf直接输出string，改为cout
+		//此外，cout其实也不能直接输出string，包含头文件<string>后，
+		//实质上是重载了运算符“<<”，使得其支持string，说明本质上，string不是基本类型，c++基于c
 		/*
 		先来看CString、string和string.h这几个区别：
-		CSting:CString是MFC或者ATL中的实现，是MFC里面封装的一个关于字符串处理的功能很强大的类,只有支持MFC的工程才可以使用。
-			   如在linux上的工程就不能用CString了，只能用标准C++中的string类了。在MFC中使用不需要自己加，但在另外的程序中需要加入#include。
+		CSting:CString是MFC或者ATL中的实现，是MFC里面封装的一个关于字符串处理的功能很强大的类,
+		只有支持MFC的工程才可以使用。如在linux上的工程就不能用CString了，只能用标准C++中的string类了。
+		在MFC中使用不需要自己加，但在另外的程序中需要加入#include。
 		string：string类既是一个标准c++的类库，同时也是STL（Standard Template Library,标准模版库）中的类库，已经纳入C++标准之中。
-				它和CString有本质的区别。
-		string.h:C语言里面关于字符数组的函数定义的头文件，常用函数有strlen、strcmp、strcpy等等，这个头文件跟C++的string类半点关系也没有，
-				所以 并非 <string.h>的“升级版本”，他们是毫无关系的两个头文件。
+		它和CString有本质的区别。
+		string.h:C语言里面关于字符数组的函数定义的头文件，常用函数有strlen、strcmp、strcpy等等，
+		这个头文件跟C++的string类半点关系也没有，所以 并非 <string.h>的“升级版本”，他们是毫无关系的两个头文件。
 		综上，cout函数重载的是string类库中的string类型，而不是CString或string.h中的。
 		*/
 		cout << str << endl;
