@@ -1,0 +1,5 @@
+﻿  minNumber.cpp
+f:\【0】daily\【0】c++\nana\minnumber\minnumber\minnumber.cpp(49): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
+f:\【0】daily\【0】c++\nana\minnumber\minnumber\minnumber.cpp(109): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
+f:\【0】daily\【0】c++\nana\minnumber\minnumber\minnumber.cpp(168): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
+  minNumber.vcxproj -> F:\【0】Daily\【0】c++\nana\minNumber\x64\Debug\minNumber.exe
