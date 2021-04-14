@@ -248,7 +248,19 @@ int main() {
 - 链表的实现与典型题
 
 #### 2、二叉树
+- 二叉树的种类
+- 二叉树的存储方式
+- 二叉树遍历
+- 二叉树构造
+- 实例
+```c++
+#include <iostream>
+using namespace std;
 
+int main(){
+
+}
+```
 
 ## 知识点总结
 
