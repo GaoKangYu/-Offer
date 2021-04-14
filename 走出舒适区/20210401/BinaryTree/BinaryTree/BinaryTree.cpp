@@ -109,6 +109,15 @@ int main() {
 	tree_right_right->val = 7;
 	tree->right->right = tree_right_right;
 
-	solu.show_tree(tree);
+	TreeNode* root_left = new TreeNode(9);
+	TreeNode* root_right = new TreeNode(20);
+	TreeNode* root = new TreeNode(3, root_left, root_right);
+
+	TreeNode* root_right_left = new TreeNode(15);
+	TreeNode* root_right_right = new TreeNode(7);
+	root_right->left = root_right_left;
+	root_right->right = root_right_right;
+
+	solu.show_tree(root);
 }
 
