@@ -472,6 +472,7 @@ int main() {
 **10、new一个对象和直接声明对象有什么区别？**
 
   答：
+  
   `ListNode* head = new ListNode()`为`new`一个对象；
   
   1）该方式需要指针接收，在堆上分配空间；
