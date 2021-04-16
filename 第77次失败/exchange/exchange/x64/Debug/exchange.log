@@ -1,0 +1,4 @@
+﻿  exchange.cpp
+f:\【0】daily\【0】c++\nana\exchange\exchange\exchange.cpp(35): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
+f:\【0】daily\【0】c++\nana\exchange\exchange\exchange.cpp(99): warning C4267: “参数”: 从“size_t”转换到“int”，可能丢失数据
+  exchange.vcxproj -> F:\【0】Daily\【0】c++\nana\exchange\x64\Debug\exchange.exe
