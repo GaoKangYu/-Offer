@@ -559,3 +559,159 @@ int main() {
   4）作用域是局部的，除了方法就没有了；
   
   5）直接定义对象的调用方式是`a.func()`。
+  
+11、继承的三种方式
+|  类型\特点   | 基类属性变化  | 派生类成员权限  |派生类对象权限|
+|:----:|:----:|:----:|:----:|
+| Public  | 不变，Private成员被隐藏 | 能访问基类Public/Protected，不能访问Private  | 能访问基类Public成员 |
+| Private  | 均变为Private，Private成员被隐藏 | 能访问基类Public/Protected，不能访问Private  | 无法访问基类任何成员 | 
+| Protected  | 均变为Protected，Private成员被隐藏 | 能访问基类Public/Protected，不能访问Private  | 无法访问基类任何成员 |
+```C++
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+class test_base{
+public:
+	int param_a;
+	bool param_b;
+	//在类内部，能够访问所有函数、成员
+	test_base() {
+		base_show_private();
+		base_show_protected();
+	}
+	void base_show_public() {
+		cout << "基类能在类内部调用自己的public函数" << endl;
+	}
+
+private:
+	int param_c;
+	bool param_d = 3;
+	void base_show_private() {
+		cout << "基类能在类内部调用自己的private函数" << endl;
+	}
+
+protected:
+	int param_e = 23;
+	bool param_f = false;
+	void base_show_protected() {
+		cout << "基类能在类内部调用自己的protected函数" << endl;
+	}
+};
+
+class test_derived_public : public test_base {
+public:
+	int param_d_a;
+	bool param_d_b;
+	test_derived_public() {
+		//public继承能够访问基类的public、protected参数、函数
+		cout << "public继承的派生类能够访问基类的protected参数param_e：" << param_e << endl;
+	}
+	void show_public() {
+		cout << "Derived_public's Public Func." << endl;
+	}
+
+private:
+	int param_d_c;
+	bool param_d_d;
+	void show_private() {
+		cout << "Derived_public's Private Func." << endl;
+	}
+
+protected:
+	int param_d_e;
+	bool param_d_f;
+	void show_protected() {
+		cout << "Derived_public's Protected Func." << endl;
+	}
+};
+
+class test_derived_private : private test_base {
+public:
+	int param_d_a;
+	bool param_d_b;
+	test_derived_private() {
+		//private继承能够访问基类的public、protected参数、函数
+		cout << "private继承的派生类能够访问基类的protected参数param_f：" << param_f << endl;
+	}
+	void show_public() {
+		cout << "Derived_private's Public Func." << endl;
+	}
+
+private:
+	int param_d_c;
+	bool param_d_d;
+	void show_private() {
+		cout << "Derived_private's Private Func." << endl;
+	}
+
+protected:
+	int param_d_e;
+	bool param_d_f;
+	void show_protected() {
+		cout << "Derived_private's Protected Func." << endl;
+	}
+};
+
+class test_derived_protected : protected test_base {
+public:
+	int param_d_a;
+	bool param_d_b;
+	test_derived_protected() {
+		//protected继承能够访问基类的public、protected参数、函数
+		cout << "protected继承的派生类能够访问基类的protected参数param_f：" << param_f << endl;
+	}
+	void show_public() {
+		cout << "Derived_protected's Public Func." << endl;
+	}
+
+private:
+	int param_d_c;
+	bool param_d_d;
+	void show_private() {
+		cout << "Derived_protected's Private Func." << endl;
+	}
+
+protected:
+	int param_d_e;
+	bool param_d_f;
+	void show_protected() {
+		cout << "Derived_protected's Protected Func." << endl;
+	}
+};
+
+
+int main() {
+	//在类外部，能够访问的只有public部分
+	cout << "以下为基类访问权限测试:" << endl;
+	test_base tb;
+	tb.param_a = 1;
+	cout << "tb.param_a = " << tb.param_a << endl;
+	tb.param_b = true;
+	tb.base_show_public();
+
+	cout << endl;
+	cout << "以下为public继承访问权限测试:" << endl;
+	//public继承可以访问基类的public部分
+	test_derived_public td_public;
+	//这里我知道为啥，新建子类实际上是从基类开始构造的，因此基类的public参数对子类可见，但修改的不是同一对象
+	td_public.param_a = 2;
+	cout << "tb.param_a = " << tb.param_a << endl;
+	cout << "td_public.param_a = " << td_public.param_a << endl;
+
+	cout << endl;
+	cout << "以下为private继承访问权限测试:" << endl;
+	//private继承在类外无法访问基类成员
+	test_derived_private td_private;
+	td_private.param_d_a = 3;
+	
+	cout << endl;
+	cout << "以下为protected继承访问权限测试:" << endl;
+	//protect继承在类外无法访问基类成员
+	test_derived_protected td_protected;
+	td_protected.param_d_a = 1;
+	cout << "td_protected.param_d_a = " << td_protected.param_d_a << endl;
+
+}
+```
