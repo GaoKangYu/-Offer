@@ -8,6 +8,69 @@ TBD
 ## 面试题收集
 ### C++基础
 - struct与union的区别？
+  
+  答：
+    
+    1、struct的大小是所有成员大小之和（包含由于内存对齐所额外占用的空间）；Union的大小是占空间最大的那个成员的大小；
+
+    2、struct可同时分别对各个成员赋值，分别占不同的空间；Union每次赋值都会使得其他成员共享这个空间，都指向这个值。
+
+```c++
+/*
+0、class和struct有什么区别？
+答：实际上没太大的区别，保留struct是为了兼容c语言。区别有：
+默认继承权限不同，class继承默认是private继承，而struct默认是public继承
+class还可用于定义模板参数，可以把typename换成class，但是关键字struct不能用于定义模板参数
+1、struct和union有什么区别？
+答：1、struct的大小是所有成员大小之和（包含由于内存对齐所额外占用的空间）；Union的大小是占空间最大的那个成员的大小；
+2、struct可同时分别对各个成员赋值，分别占不同的空间；Union每次赋值都会使得其他成员共享这个空间，都指向这个值
+*/
+
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+struct testStruct {
+	int param_a;//4byte
+	bool param_b;//1byte
+	char param_c;//1byte
+};
+
+union testUnion {
+	int param_a;//4byte
+	int param_b;//4byte
+	int param_c;//4byte
+	int param_d;//4byte
+};
+
+int main() {
+	testStruct tS;
+	//struct的大小是所有成员大小之和（包含由于内存对齐所额外占用的空间）
+	cout << "tS的大小：" << sizeof(tS) << endl;
+	//struct可同时分别对各个成员赋值，分别占不同的空间
+	tS.param_a = 1;
+	tS.param_b = true;
+	tS.param_c = 'c';
+	cout << "当前tS的param_a值为：" << tS.param_a << ",param_b值为：" << tS.param_b << ",param_c值为：" << tS.param_c << endl;
+	testUnion tU;
+	//Union的大小是占空间最大的那个成员的大小
+	cout << "tU的大小：" << sizeof(tU) << endl;
+	//Union每次赋值都会使得其他成员被重载，其他成员共享这个空间，都指向这个值
+	tU.param_a = 1;
+	//输出1 1 1 1
+	cout << "当前tU的param_a值为：" << tU.param_a << ",param_b值为：" << tU.param_b << ",param_c值为：" << tU.param_c << ",param_d值为：" << tU.param_d << endl;
+	tU.param_b = 2;
+	//输出2 2 2 2
+	cout << "当前tU的param_a值为：" << tU.param_a << ",param_b值为：" << tU.param_b << ",param_c值为：" << tU.param_c << ",param_d值为：" << tU.param_d << endl;
+	tU.param_c = 3;
+	//输出3 3 3 3
+	cout << "当前tU的param_a值为：" << tU.param_a << ",param_b值为：" << tU.param_b << ",param_c值为：" << tU.param_c << ",param_d值为：" << tU.param_d << endl;
+	tU.param_d = 4;
+	//输出4 4 4 4
+	cout << "当前tU的param_a值为：" << tU.param_a << ",param_b值为：" << tU.param_b << ",param_c值为：" << tU.param_c << ",param_d值为：" << tU.param_d << endl;
+}
+```
 - 什么是内存对齐，其底层原理是？意义在于？
 - const与static的区别？
 - 什么是虚函数，什么是虚函数表？
