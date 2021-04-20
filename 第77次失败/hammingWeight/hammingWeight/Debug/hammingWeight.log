@@ -1,0 +1,5 @@
+﻿  hammingWeight.cpp
+f:\【0】daily\【0】c++\nana\hammingweight\hammingweight\hammingweight.cpp(53): error C2146: 语法错误: 缺少“;”(在标识符“input”的前面)
+f:\【0】daily\【0】c++\nana\hammingweight\hammingweight\hammingweight.cpp(53): error C2065: “input”: 未声明的标识符
+f:\【0】daily\【0】c++\nana\hammingweight\hammingweight\hammingweight.cpp(54): error C2065: “input”: 未声明的标识符
+f:\【0】daily\【0】c++\nana\hammingweight\hammingweight\hammingweight.cpp(55): error C2065: “input”: 未声明的标识符
