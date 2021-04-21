@@ -1,0 +1,3 @@
+﻿  singleNumber.cpp
+f:\【0】daily\【0】c++\nana\singlenumber\singlenumber\singlenumber.cpp(34): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+  singleNumber.vcxproj -> F:\【0】Daily\【0】c++\nana\singleNumber\x64\Debug\singleNumber.exe
