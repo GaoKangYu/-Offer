@@ -1,0 +1,4 @@
+﻿  maxValue.cpp
+f:\【0】daily\【0】c++\nana\maxvalue\maxvalue\maxvalue.cpp(43): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+f:\【0】daily\【0】c++\nana\maxvalue\maxvalue\maxvalue.cpp(44): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+  maxValue.vcxproj -> F:\【0】Daily\【0】c++\nana\maxValue\x64\Debug\maxValue.exe
