@@ -787,3 +787,109 @@ public:
 15、const指针
 
   答：
+  
+  例如：
+  ```C++
+  //v1 code
+  char* p = "test";
+  p[0] = 'a';
+  //此时编译可以通过，但运行时报错，这样是不安全的
+  
+  //v2 code
+  const char* p = "test";
+  p[0] = 'a';
+  //此时直接编译不通过，因为const告诉了编译器这个常量字符数组是不能修改的
+  ```
+  `const T*`或者`T const*`表示不能修改该指针指向的内容，但是指针本身的值是可以修改的；
+  
+  另外，`T* const`表示该指针是一个常量，指针本身的值不能改变，但是指针指向内容可以改变；
+  
+  `const T* const`表示指针本身以及指针指向内容都不能改变。
+  
+  `const_cast`：可用于去掉`const`属性，比强行转换可读性高。
+  ```C++
+  const int n = 5;
+  //实现一个指向n的指针
+  //int* p = &n;编译不通过，类型不匹配
+  //int* p = (int*)&n;使用强制转换可实现
+  //或者
+  int *p = const_cast<int*>(&n);
+  ```
+  
+ 16、默认参数
+   
+   答：
+   ```c++
+   //v1 code
+   int testFun(int n1, int n2, int n3, int n4, int n5, int n6){
+   	return 0;
+   }
+   
+   int main(){
+   	testFun(1, 2, 3);
+	return 0;
+   }
+   
+   //v2 code
+   //使用宏，将后三个值给定一个默认值，但是因为没有类型检查，默认值也不方便再改变，所以不安全
+   #define TESTFUN(m,n,k) TestFun(m,n,k,1,2,3)
+   int testFun(int n1, int n2, int n3, int n4, int n5, int n6){
+   	return 0;
+   }
+   
+   int main(){
+   	TESTFUN(1,2,3);
+	return 0;
+   }
+   
+   //v3 code
+   int testFun(int n1, int n2, int n3, int n4 = 4, int n5 = 5, int n6 = 6){
+   	return 0;
+   }
+   
+   int main(){
+   	testFun(1,2,3);
+	testFun(1,2,3,44);
+	return 0;
+   }
+   ```
+   
+   函数默认参数可以写在声明处（比如自定义的头文件）**或者** 定义处，只能出现在一个地方，一般写在声明处。
+   
+   当一个参数有默认值时，其右边的所有参数都应该有默认值。
+   
+17、什么是内联函数？
+  
+  答：
+  
+  声明方式：`inline`，直接把函数体粘贴在调用处，节省找进出口的开销，是对编译器的**建议**，debug模式为了方便调试，编译器不会采用此建议。
+  
+  用内联说明这个函数会多次使用，因此一般用在头文件里，如果该函数被多个cpp文件调用，会报错重复定义，必须加`inline`，此时就没有调用过程了。
+  
+  ```
+  int getMax(int a, int b){
+  	return a > b ? a : b;
+  }
+  
+  int main(){
+  	int n1 = getMax(1,2);
+	int n2 = getMax(2,3);
+	int n3 = getMax(2,4);
+	//需要调用三次函数，但是进出函数的开销可能比这个函数本身功能的开销还大
+	//（为了简单的喝口水，上下6楼就位买水喝，就很亏，如果买很多东西顺便买水，就还好）
+	//也可以用宏实现这个功能，相当于直接把函数体放在了调用处,不会产生调用开销，
+	//但仍然是不安全，没有类型检查，不支持很多运算操作等
+  }
+  
+  //v2 code
+  inline int getMax(int a, int b){
+  	return a > b ? a : b;
+  }
+  
+  int main(){
+  //直接把函数体放在调用处
+  	int n1 = getMax(1,2);
+	int n2 = getMax(2,3);
+	int n3 = getMax(2,4);
+  }
+  ```
