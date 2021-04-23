@@ -1,0 +1,3 @@
+﻿  translateNum.cpp
+f:\【0】daily\【0】c++\nana\translatenum\translatenum\translatenum.cpp(36): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+  translateNum.vcxproj -> F:\【0】Daily\【0】c++\nana\translateNum\x64\Debug\translateNum.exe
