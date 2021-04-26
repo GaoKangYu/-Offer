@@ -1,0 +1,5 @@
+﻿  levelOrder.cpp
+f:\【0】daily\【0】c++\nana\levelorder\levelorder\levelorder.cpp(53): warning C4018: “>=”: 有符号/无符号不匹配
+f:\【0】daily\【0】c++\nana\levelorder\levelorder\levelorder.cpp(84): warning C4018: “<”: 有符号/无符号不匹配
+f:\【0】daily\【0】c++\nana\levelorder\levelorder\levelorder.cpp(86): warning C4018: “<”: 有符号/无符号不匹配
+  levelOrder.vcxproj -> F:\【0】Daily\【0】c++\nana\levelOrder\Debug\levelOrder.exe
