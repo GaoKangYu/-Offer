@@ -893,3 +893,62 @@ public:
 	int n3 = getMax(2,4);
   }
   ```
+**18、什么是引用？**
+```C++
+//v1 code，函数fun中的形参n是拷贝的，不是mian中的同一个n
+void fun(int n){
+  n = 8;
+  return;
+}
+
+int main(){
+  int n = 5;
+  fun(n);
+  cout << n << endl;
+  return 0;
+}
+
+//v2 code，使用指针，但不安全，需要检查地址
+void fun(int* pN){
+if(pN != nullptr){
+   n = 8; 
+}
+ return;
+}
+
+int main(){
+  int n = 5;
+  fun(&n);
+  cout << n << endl;
+  return 0;
+}
+
+//v3 code，使用引用
+void fun(int &n){
+ n = 8;
+ return;
+}
+
+int main(){
+  int n = 5;
+  //或者
+  //int& refN = n; //左值引用，变量的别名，此时函数形参仍是指针int* pN
+  fun(n);
+  cout << n << endl;
+  return 0;
+}
+```
+  答：
+  
+  注意事项：
+  
+  1、引用在定义时必须初始化，不能用常量为引用赋值。
+  
+  2、只有常量引用可以使用常量来初始化，例如：`const int& crefN = 12; `。
+  
+  3、引用关系一旦建立无法修改。
+  
+  引用的使用：
+  
+  1、作为函数参数（形参使用引用）。
+  
