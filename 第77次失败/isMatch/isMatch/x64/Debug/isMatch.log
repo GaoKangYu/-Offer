@@ -1,0 +1,5 @@
+﻿  isMatch.cpp
+f:\【0】daily\【0】c++\nana\ismatch\ismatch\ismatch.cpp(68): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+f:\【0】daily\【0】c++\nana\ismatch\ismatch\ismatch.cpp(69): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+f:\【0】daily\【0】c++\nana\ismatch\ismatch\ismatch.cpp(169): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+  isMatch.vcxproj -> F:\【0】Daily\【0】c++\nana\isMatch\x64\Debug\isMatch.exe
