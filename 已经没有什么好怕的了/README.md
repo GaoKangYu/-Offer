@@ -4,7 +4,7 @@
 
 ## 需三刷（未短时间想出解答思路）
 
-- [constructArr](https://github.com/GaoKangYu/Sword-For-Offer/blob/main/%E5%B7%B2%E7%BB%8F%E6%B2%A1%E6%9C%89%E4%BB%80%E4%B9%88%E5%A5%BD%E6%80%95%E7%9A%84%E4%BA%86/constructArr.cpp)
+- 剑指offer66 - [constructArr](https://github.com/GaoKangYu/Sword-For-Offer/blob/main/%E5%B7%B2%E7%BB%8F%E6%B2%A1%E6%9C%89%E4%BB%80%E4%B9%88%E5%A5%BD%E6%80%95%E7%9A%84%E4%BA%86/constructArr.cpp)
 
 ```C++
 //思路正确，但是效率很低，没有利用到累乘这个条件，每次都需要重复乘，重新赋值tmp
@@ -43,7 +43,8 @@ public:
 	vector<int> constructArr(vector<int>& a) {
 		int n = a.size();
 		vector<int> ret(n);
-		//第一遍，求取该位置左边所有数的乘积，注意，先乘，再增加下标，始终保持返回数组的ret[i]等于累乘至a[i-1]，这里使用赋值而不是*也可以节省时间
+		//第一遍，求取该位置左边所有数的乘积，注意，先乘，再增加下标，始终保持返回数组的ret[i]等于累乘至a[i-1]，
+		//这里使用赋值而不是*也可以节省时间
 		for (int i = 0, tmp = 1; i < n; tmp *= a[i], ++i) {
 			ret[i] = tmp;
 		}
