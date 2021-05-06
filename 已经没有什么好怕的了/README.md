@@ -4,7 +4,7 @@
 
 ## 需三刷（未短时间想出解答思路）
 
-- 剑指offer66 - [constructArr](https://github.com/GaoKangYu/Sword-For-Offer/blob/main/%E5%B7%B2%E7%BB%8F%E6%B2%A1%E6%9C%89%E4%BB%80%E4%B9%88%E5%A5%BD%E6%80%95%E7%9A%84%E4%BA%86/constructArr.cpp)
+- [剑指offer66 - constructArr](https://github.com/GaoKangYu/Sword-For-Offer/blob/main/%E5%B7%B2%E7%BB%8F%E6%B2%A1%E6%9C%89%E4%BB%80%E4%B9%88%E5%A5%BD%E6%80%95%E7%9A%84%E4%BA%86/constructArr.cpp)
 
 思路：两次累乘，从最左乘到i-1，从最右乘到i+1，通过**在自增下标前积累累乘值**实现
 
@@ -67,3 +67,40 @@ public:
 
 ## 递归与回溯
 
+- 递归三部曲
+
+  1、整个递归的终止条件
+
+  2、一级递归需要做什么？
+
+  3、应该返回给上一级的返回值是什么？
+  
+  [例题1 - 剑指offer27 二叉树的镜像](https://github.com/GaoKangYu/Sword-For-Offer/blob/main/%E5%B7%B2%E7%BB%8F%E6%B2%A1%E6%9C%89%E4%BB%80%E4%B9%88%E5%A5%BD%E6%80%95%E7%9A%84%E4%BA%86/mirrorTree.cpp)
+
+```C++
+	//递归三部曲
+	void mirrorTreeProcess(TreeNode* root) {
+		//其一：终止条件是什么？——节点为空
+		//因此递归常常需要返回值为void
+		if (!root) {
+			return;
+		}
+		if (!root->left && !root->right) {
+			return;
+		}
+		//其二，默认前后处理完全正确，只需要专注于这一层的操作
+		//这一层需要进行什么样的操作？——交换左右子树
+		TreeNode* tmp = root->left;
+		root->left = root->right;
+		root->right = tmp;
+		//其三，继续递归
+		//如果左子树不为空，递归左边
+		if (root->right) {
+			mirrorTreeProcess(root->right);
+		}
+		//如果右子树不为空，递归右边
+		if (root->left) {
+			mirrorTreeProcess(root->left);
+		}
+	}
+```
