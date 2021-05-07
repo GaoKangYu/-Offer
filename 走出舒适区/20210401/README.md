@@ -1003,5 +1003,35 @@ int main(){
   1、在不同的作用域可以定义多个同名变量
   
   2、内部变量会隐藏外部变量（从内往外找）
+  
+  名字空间`namespace`：
+  
+  1、是一种作用域的划分，通常用于区分项目中的模块或组件
+  
+  2、关键字`namespace`可以分开使用（可以放在不同文件内）
+  
+  3、名字空间可以嵌套
+  
+  4、名字空间可以取别名
+  
+  ```C++
+  namespace testName{
+  	int test_val_1 = 4;
+  }
+  
+  namespace testNewName{
+  	int test_val_1 = 3;
+  }
+  
+  int test_val_1 = 1;
+  
+  int main(){
+    testName::test_val_1 = 6;
+    cout << testName::test_val_1 <<endl;
+    testNewName::test_val_1 = 7;
+    cout << testNewName::test_val_1 <<endl;
+    //::test_val_1表示全局作用域
+  }
+  ```
     
   **20、友元函数**
