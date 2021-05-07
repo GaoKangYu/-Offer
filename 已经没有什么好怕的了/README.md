@@ -1,6 +1,6 @@
 # 补足短板
 
-经过一刷发现的不足之处：二叉树、BFS与DFS；动态规划（需要**选择**时常采用）；图形题；递归与回溯
+经过一刷发现的不足之处：二叉树、BFS与DFS（没有你想象的复杂）；动态规划（需要**选择**时常采用）；图形题；递归与回溯
 
 ## 需三刷（未短时间想出解答思路）
 
@@ -57,6 +57,53 @@ public:
 		}
 		return ret;
 	}
+```
+
+- [剑指offer13 - movingCount](https://github.com/GaoKangYu/Sword-For-Offer/blob/main/%E5%B7%B2%E7%BB%8F%E6%B2%A1%E6%9C%89%E4%BB%80%E4%B9%88%E5%A5%BD%E6%80%95%E7%9A%84%E4%BA%86/movingCount.cpp)
+
+思路：DFS，模板题
+```C++
+class Solution {
+public:
+	int ans = 0;
+	int vis[220][220] = { };
+
+	int movingCount(int m, int n, int k) {
+		dfs(n, m, k, 0, 0);
+		return ans;
+	}
+	//形参：地图高、宽、限制条件k，起始点x坐标、y坐标
+	void dfs(int n, int m, int k, int x, int y) {
+		//边界条件1 2 3 ：x坐标超出边界0或m，y坐标超出边界n或0，该点已经走过了
+		if (x < 0 || x >= m || y < 0 || y >= n || vis[x][y]) {
+			return;
+		}
+		//边界条件4：计算该点的数位和
+		int tmp = 0, x1 = x, y1 = y;
+		while (x1) {
+			tmp += (x1 % 10);
+			x1 /= 10;
+		}
+		while (y1) {
+			tmp += (y1 % 10);
+			y1 /= 10;
+		}
+		//超过K也返回
+		if (tmp > k) {
+			return;
+		}
+		//每走一个点计数加一
+		ans++;
+		//标记此点已经走过
+		vis[x][y] = 1;
+		//四个方向探索
+		dfs(n, m, k, x, y - 1);
+		dfs(n, m, k, x, y + 1);
+		dfs(n, m, k, x - 1, y);
+		dfs(n, m, k, x + 1, y);
+		return;
+	}
+};
 ```
 
 ## 二叉树、BFS、DFS
