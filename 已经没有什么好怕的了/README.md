@@ -2,7 +2,7 @@
 
 经过一刷发现的不足之处：二叉树、BFS与DFS（没有你想象的复杂）；动态规划（需要**选择**时常采用）；图形题；递归与回溯
 
-## 需三刷（未短时间想出解答思路）
+## 需三刷（未短时间想出解答思路/有比较新奇的特殊解法）
 
 - [剑指offer66 - constructArr](https://github.com/GaoKangYu/Sword-For-Offer/blob/main/%E5%B7%B2%E7%BB%8F%E6%B2%A1%E6%9C%89%E4%BB%80%E4%B9%88%E5%A5%BD%E6%80%95%E7%9A%84%E4%BA%86/constructArr.cpp)
 
@@ -102,6 +102,27 @@ public:
 		dfs(n, m, k, x - 1, y);
 		dfs(n, m, k, x + 1, y);
 		return;
+	}
+};
+```
+
+- [剑指offer39 - majorityElement](https://github.com/GaoKangYu/Sword-For-Offer/blob/main/%E5%B7%B2%E7%BB%8F%E6%B2%A1%E6%9C%89%E4%BB%80%E4%B9%88%E5%A5%BD%E6%80%95%E7%9A%84%E4%BA%86/majorityElement.cpp)、
+
+摩尔投票法
+```C++
+//摩尔投票法，很巧妙的方法
+class Solution {
+public:
+	int majorityElement(vector<int>& nums) {
+		//相同则计数加一，不同则极限一换一
+		int x = 0, vote = 0;
+		for (auto n : nums) {
+			if (vote == 0) {
+				x = n;
+			}
+			vote += (x == n ? 1 : -1);
+		}
+		return x;
 	}
 };
 ```
