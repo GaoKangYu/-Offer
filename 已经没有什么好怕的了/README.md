@@ -133,6 +133,36 @@ public:
 
 ## 二叉树、BFS、DFS
 
+- BFS模板题1 - 层序遍历(借助queue)
+- [剑指offer32 - levelOrder](https://github.com/GaoKangYu/Sword-For-Offer/blob/main/%E5%B7%B2%E7%BB%8F%E6%B2%A1%E6%9C%89%E4%BB%80%E4%B9%88%E5%A5%BD%E6%80%95%E7%9A%84%E4%BA%86/levelOrder.cpp)
+
+```C++
+class Solution {
+public:
+	vector<int> levelOrder(TreeNode* root) {
+		vector<int> ret;
+		queue<TreeNode*> q;
+		if (!root) {
+			return ret;
+		}
+		q.push(root);
+		while (!q.empty()) {
+			TreeNode* cur = q.front();
+			ret.push_back(cur->val);
+			//其实核心就在于这里，单纯递归很难去除这个重复根节点
+			q.pop();
+			if (cur->left) {
+				q.push(cur->left);
+			}
+			if (cur->right) {
+				q.push(cur->right);
+			}
+		}
+		return ret;
+	}
+};
+```
+
 ## 动态规划
 
 ## 图形题
