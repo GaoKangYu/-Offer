@@ -131,6 +131,13 @@ public:
 
 三刷的时候需要考虑大数情况
 
+
+- [剑指offer04 - findNumberIn2DArray](https://github.com/GaoKangYu/Sword-For-Offer/blob/main/%E5%B7%B2%E7%BB%8F%E6%B2%A1%E6%9C%89%E4%BB%80%E4%B9%88%E5%A5%BD%E6%80%95%E7%9A%84%E4%BA%86/findNumberIn2DArray.cpp)
+
+线性查找：从二维数组的右上角开始查找。如果当前元素等于目标值，则返回 true。如果当前元素大于目标值，则移到左边一列。如果当前元素小于目标值，则移到下边一行。
+
+原理：当前元素大于目标值，说明其下面的值都大于，右边的值都大于，所以只能往左；如果小于，那么其上面和左边都小，因此只能往下。
+
 ## 二叉树、BFS、DFS
 
 - BFS模板题1 - 层序遍历(借助queue)
