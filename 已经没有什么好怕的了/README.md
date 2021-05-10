@@ -206,3 +206,49 @@ public:
 		}
 	}
 ```
+
+- [例题2 叶子相似的树]（https://leetcode-cn.com/problems/leaf-similar-trees/）
+
+```C++
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    bool leafSimilar(TreeNode* root1, TreeNode* root2) {
+        //叶子元素相等，那么相似
+        string s_1;
+        dfs(root1, s_1);
+        string s_2;
+        dfs(root2, s_2);
+        return s_1 == s_2;
+    }
+
+    void dfs(TreeNode* root, string &s){
+        if(!root){
+            return; 
+        }
+	//本题是找叶节点
+	//叶节点的定义:没有左右子树的节点
+        if(!root->left && !root->right){
+            s += root->val + '0';
+        }
+        else{
+            if(root->left){
+                dfs(root->left, s);
+            }
+            if(root->right){
+                dfs(root->right, s);
+            }
+        }
+    }
+};
+```
