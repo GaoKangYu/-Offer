@@ -82,6 +82,69 @@ int main() {
 - 快速排序
 ### 手撕代码
 - 链表按位相加
+```C++
+ struct ListNode {
+     int val;
+     ListNode *next;
+     ListNode(int x) : val(x), next(NULL) {}
+ };
+class Solution {
+public:
+	ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+	//依旧使用迭代法
+        //思路为全部加在L1一侧，尽可能不额外增加链表节点
+		ListNode* ret = l1;//新建返回的头结点
+        ListNode* l1_pre = l1;//新建记录L1前一个节点的节点，防止丢失
+		bool flag = false;//进位符
+		while (l1 != nullptr && l2 != nullptr) {
+			int val = l1->val + l2->val + flag;//每轮为L1 L2节点值加上进位值
+			if (val >= 10) {
+				l1->val = val % 10; //大于10则取余
+				flag = true;        //标志为需要进位
+            }
+			else {
+                l1->val = val;      //不超过10则直接是本身
+				flag = false;       //标志为不需要进位
+			}
+            l1_pre = l1;            //记录L1前一个节点
+			l1 = l1->next;          //前进，继续遍历
+			l2 = l2->next;
+		}
+        //如果L1或者L2中某一个链表还没有遍历结束
+        //注意此时L1节点可能已经是空节点了，因此不能用L1这个疑似野节点续接
+        //使用存储L1节点前一个节点的L1_pre
+        //如果L1为空，那么将L1续接L2，否则是L2为空了，续接L1
+        l1_pre->next = (l1 == nullptr ? l2 : l1);
+        l1 = l1_pre->next;
+        //仍然是靠往L1的
+        while(l1){
+            //类似的处理
+            int val = l1->val + flag;
+            if(val >= 10){
+                l1->val = val % 10;
+                flag = true;
+            }
+            else{
+                l1->val = val;
+                flag = false;
+                break; //如果不需要进位，后面也不需要再计算了
+            }
+            l1_pre = l1;
+            l1 = l1->next;
+        }
+        //如果L1和L2都遍历完了但还可进位(也就是1 + 99 = 100这种情况)
+        //额外新建节点
+        //此时L1又是野节点了，需要用L1_pre
+        if(flag){
+            ListNode* add = new ListNode(1);
+            l1_pre->next = add;
+        }
+        //返回ret
+        return ret;
+	}
+};
+```
+
 ### 聊天
 - 最近看了什么书？
 ### 反问
