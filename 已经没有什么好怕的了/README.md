@@ -4,6 +4,42 @@
 
 ## 需三刷（未短时间想出解答思路/有比较新奇的特殊解法）
 
+- [剑指offer51 - reversePairs](https://github.com/GaoKangYu/Sword-For-Offer/blob/main/%E5%B7%B2%E7%BB%8F%E6%B2%A1%E6%9C%89%E4%BB%80%E4%B9%88%E5%A5%BD%E6%80%95%E7%9A%84%E4%BA%86/reversePairs.cpp)
+
+并归排序模板题
+```C++
+class Solution {
+public:
+	int reversePairs(vector<int>& nums) {
+		vector<int> tmp(nums.size());
+		return mergeSort(0, nums.size() - 1, nums, tmp);
+	}
+private:
+	int mergeSort(int l, int r, vector<int>& nums, vector<int>& tmp) {
+		// 终止条件
+		if (l >= r) return 0;
+		// 递归划分
+		int m = (l + r) / 2;
+		int res = mergeSort(l, m, nums, tmp) + mergeSort(m + 1, r, nums, tmp);
+		// 合并阶段
+		int i = l, j = m + 1;
+		for (int k = l; k <= r; k++)
+			tmp[k] = nums[k];
+		for (int k = l; k <= r; k++) {
+			if (i == m + 1)
+				nums[k] = tmp[j++];
+			else if (j == r + 1 || tmp[i] <= tmp[j])
+				nums[k] = tmp[i++];
+			else {
+				nums[k] = tmp[j++];
+				res += m - i + 1; // 统计逆序对
+			}
+		}
+		return res;
+	}
+};
+```
+
 - [剑指offer66 - constructArr](https://github.com/GaoKangYu/Sword-For-Offer/blob/main/%E5%B7%B2%E7%BB%8F%E6%B2%A1%E6%9C%89%E4%BB%80%E4%B9%88%E5%A5%BD%E6%80%95%E7%9A%84%E4%BA%86/constructArr.cpp)
 
 思路：两次累乘，从最左乘到i-1，从最右乘到i+1，通过**在自增下标前积累累乘值**实现
