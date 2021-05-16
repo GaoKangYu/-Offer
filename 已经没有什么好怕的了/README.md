@@ -4,6 +4,10 @@
 
 ## 需三刷（未短时间想出解答思路/有比较新奇的特殊解法）
 
+- [剑指offer20 - isNumber](https://github.com/GaoKangYu/Sword-For-Offer/blob/main/%E5%B7%B2%E7%BB%8F%E6%B2%A1%E6%9C%89%E4%BB%80%E4%B9%88%E5%A5%BD%E6%80%95%E7%9A%84%E4%BA%86/isNumber.cpp)
+
+情况虽然比较复杂，但该题解思路非常清晰
+
 - [剑指offer51 - reversePairs](https://github.com/GaoKangYu/Sword-For-Offer/blob/main/%E5%B7%B2%E7%BB%8F%E6%B2%A1%E6%9C%89%E4%BB%80%E4%B9%88%E5%A5%BD%E6%80%95%E7%9A%84%E4%BA%86/reversePairs.cpp)
 
 并归排序模板题
