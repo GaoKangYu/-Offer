@@ -1,7 +1,7 @@
 # C++开发岗基础知识整理
 ## 目录
 
-1、[C++基础](https://github.com/GaoKangYu/Sword-For-Offer/edit/main/Again%20and%20Again#C++基础)
+1、[C++基础](https://github.com/GaoKangYu/Sword-For-Offer/tree/main/Again%20and%20Again#c%E5%9F%BA%E7%A1%80)
 
 2、[计算机网络]()
 
