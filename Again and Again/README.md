@@ -16,7 +16,84 @@
 
 ### 1、什么是多态？
 
-#### 1.1、为什么基类的析构函数必须是虚函数？
+答：多态是指在有继承关系的不同类对象间，调用同一函数，产生了不同行为的现象。该机制通过指针和虚函数实现。
+
+#### 1.1、如何实现多态？
+
+答：
+
+首先，实现多态有两个限制条件：
+
+（1）调用函数的对象必须是指针或者引用。
+
+（2）被调用的函数必须是虚函数，且完成了虚函数的重写。
+
+如果调用函数的对象不是指针或者引用，那么为静态绑定，在编译阶段完成。否则为动态绑定，在运行阶段完成。
+
+如果调用函数不是虚函数，那么都将执行基类的函数。
+
+```C++
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+class _base{
+public:
+	_base() {
+		cout << "构造了一个_base类" << endl;
+	}
+
+	virtual void show_name() {
+		cout << "此为_base类函数" << endl;
+	}
+
+	virtual ~_base(){
+		cout << "析构了一个_base类" << endl;
+	}
+private:
+	int _m_val;
+
+};
+
+class _child_a : public _base {
+public:
+	_child_a() {
+		_m_ptr = new int(0);
+		cout << "构造了一个_child_a类" << endl;
+	}
+
+	void show_name() {
+		cout << "此为_child_a类函数" << endl;
+	}
+
+	~_child_a() {
+		cout << "析构了一个_child_a类" << endl;
+		delete _m_ptr;
+		cout << "释放了_m_ptr" << endl;
+	}
+private:
+	int _m_val;
+	int* _m_ptr = nullptr;
+};
+
+int main() {
+	_base* _b_ptr = new _child_a;
+	_b_ptr->show_name();
+	delete _b_ptr;
+}
+```
+#### 1.2、只有动态绑定才具有多态性吗？
+
+答：静态绑定也有多态性，函数重载和运算符重载就属于编译时的静态多态性。
+
+#### 1.3、什么是函数重载？
+
+答：函数重载发生在同一作用域内，指一系列函数名相同但参数列表不同（类型、个数或者顺序，当然这个顺序变换不能有歧义）的函数。
+
+#### 1.4、为什么基类的析构函数必须是虚函数？
+
+答：因为会造成内存泄露问题，通过基类指针来管理派生类，如果析构函数不是虚函数，释放该指针时只会析构基类，导致派生类占用的空间没有被释放。
 
 ### 2、介绍一下智能指针？
 
