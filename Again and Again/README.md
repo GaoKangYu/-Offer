@@ -107,7 +107,55 @@ weak_ptr：用来解决shared_ptr相互引用时的死锁问题,如果说两个s
 
 #### 2.1、什么是拷贝构造？什么移动构造？
 
-答：拷贝构造是指使用对象来初始化同类的另一个对象，它会分配一片空间并把传入对象的值复制过来，属于深拷贝。如果没有自行定义拷贝构造函数，编译器会自己生成，但是如果类是含有指针变量、有动态分配内存的情况，不可缺省。
+答：拷贝构造是指使用对象来初始化同类的另一个对象，它会分配一片空间并把传入对象的值复制过来，属于深拷贝。如果没有自行定义拷贝构造函数，编译器会自己生成，但是如果类是含有指针变量、有动态分配内存的情况，不可缺省（经过测试，验证了这一结论，编译通过运行错误，报错`Invalid address specified to RtlValidateHeap`）。
+```C++
+#include <iostream>
+#include <vector>
+#include <assert.h>
+
+using namespace std;
+
+class TestClass {
+public:
+	TestClass() {
+		cout << "构造了一个TestClass类" << endl;
+		_m_val = 0;
+		int_ptr = new int(10);
+		//int_ptr = &_m_val;
+	}
+
+	TestClass(int x) {
+		cout << "构造了一个TestClass类" << endl;
+		_m_val = x;
+		int_ptr = new int(x);
+		//错误，_m_val何时释放是未知的，这样的操作本身也不安全
+		//int_ptr = &_m_val;
+	}
+
+	TestClass(const TestClass& obj) {
+		cout << "构造了一个TestClass类" << endl;
+		_m_val = obj._m_val;
+		int_ptr = new int;
+		*int_ptr = *obj.int_ptr;
+	}
+
+	~TestClass(){
+		cout << "析构了一个TestClass类" << endl;
+		assert(int_ptr != nullptr);
+			delete this->int_ptr;
+			cout << "释放了int_ptr指针" << endl;
+	}
+private:
+	int _m_val;
+	int* int_ptr;
+};
+
+int main() {
+	TestClass a(10);
+	TestClass b = a;
+}
+```
+
 
 移动构造：同样为使用对象来初始化同类另一个对象，但是没有重新分配空间，而是将构造对象的指针指向了要拷贝对象的空间，并将拷贝对象的指针指空。对于程序执行过程中产生的临时对象，往往只用于传递数据（没有其它的用处），并且会很快会被销毁。因此在使用临时对象初始化新对象时，我们可以使用移动构造将其包含的指针成员指向的内存资源直接移给新对象所有，无需再新拷贝一份，这能提高初始化的执行效率。
 
