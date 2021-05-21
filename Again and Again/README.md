@@ -342,27 +342,47 @@ vector是连续存储空间，查找简单但在序列中间增删元素效率�
 ### 反转链表
 
 ```C++
-struct ListNode{
-    int val;
-    ListNode* next;
-    ListNode(int x) : val(x), next(nullptr){ }
+#include <iostream>
+
+using namespace std;
+
+struct ListNode {
+	int val;
+	ListNode* next;
+	ListNode(int x) : val(x), next(nullptr) { }
 };
 
-class Solution{
+class Solution {
 public:
-    ListNode* reverseList(ListNode* head){
-        //pre cur next
-	ListNode* pre = nullptr;
-	ListNode* cur = head;
-	while(cur){
-	    ListNode* next = cur->next;
-	    cur->next = pre;
-	    pre = cur;
-	    cur = next;
+	ListNode* reverseList(ListNode* head) {
+		//pre cur next
+		ListNode* pre = nullptr;
+		ListNode* cur = head;
+		while (cur) {
+			ListNode* next = cur->next;
+			cur->next = pre;
+			pre = cur;
+			cur = next;
+		}
+		return pre;
 	}
-	return pre;
-    }
 };
+
+int main() {
+	Solution solu;
+	ListNode* head = new ListNode(1);
+	ListNode* node_1 = new ListNode(2);
+	ListNode* node_2 = new ListNode(3);
+
+	head->next = node_1;
+	node_1->next = node_2;
+
+	ListNode* res = solu.reverseList(head);
+	while (res){
+		cout << res->val << " ";
+		res = res->next;
+	}
+}
 ```
 
 ## 项目相关
