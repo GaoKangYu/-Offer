@@ -4,6 +4,10 @@
 
 ## 需三刷（未短时间想出解答思路/有比较新奇的特殊解法）
 
+- [剑指offer16 - myPow.cpp](https://github.com/GaoKangYu/Sword-For-Offer/blob/main/%E5%B7%B2%E7%BB%8F%E6%B2%A1%E6%9C%89%E4%BB%80%E4%B9%88%E5%A5%BD%E6%80%95%E7%9A%84%E4%BA%86/myPow.cpp)
+
+快速幂，只有在1的位置上，才有相应的权重，推移权重，积累权重
+
 - [剑指offer65 - add.cpp](https://github.com/GaoKangYu/Sword-For-Offer/blob/main/%E5%B7%B2%E7%BB%8F%E6%B2%A1%E6%9C%89%E4%BB%80%E4%B9%88%E5%A5%BD%E6%80%95%E7%9A%84%E4%BA%86/add.cpp)
 
 位运算，真值表，异或 与，背下来
