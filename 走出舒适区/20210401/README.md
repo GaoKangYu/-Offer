@@ -1241,5 +1241,39 @@ int main(){
   
   答：封装、继承、多态。
   
+  public：公用
+  
+  private：私有
+  
+  protected：保护，除了自身或派生类外，不能在其他地方使用，与私有的区别：类域内部可以访问父类protected成员，但不能访问private成员
+  
+  继承可见性：
+  
+  public继承：父类private不可见，其余属性不改变
+  
+  protected继承：父类private不可见，其余属性都变为protected
+  
+  private继承：父类private不可见，其余属性都变成private
+  
+  两个权限组合在一起，取最严格的的权限
+  
+  继承可见性在何时做检查？
+  
+  答：编译器在编译时刻做的限制。
+  
+  子类的成员内存分布如何？
+  
+  `sizeof(子类) = sizeof(基类) + sizeof（子类的新成员）`private成员尽管不可见，但仍存在于子类的内存中
+  
+  指针转换的安全性
+  ```C++
+  Base per;
+  Child stu;
+  //子类转父类（安全，学生都是人）
+  Base* cper = &stu;
+  //父类转子类（不安全，人不一定都是学生，指针越界）
+  Child* pstu = (Child*)&per;
+  ```
+  
   
   **26、友元函数**
