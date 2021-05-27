@@ -304,7 +304,7 @@ public:
 	}
 ```
 
-- [例题2 叶子相似的树]（https://leetcode-cn.com/problems/leaf-similar-trees/）
+- [例题2 叶子相似的树](https://leetcode-cn.com/problems/leaf-similar-trees/)
 
 ```C++
 /**
