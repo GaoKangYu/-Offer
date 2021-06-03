@@ -1452,3 +1452,83 @@ int main() {
   ```
 	
   **35、友元函数**
+	
+  答：
+	
+  ```C++
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+//友元
+//1、普通的函数
+//2、友元成员函数
+//3、友元类
+//作用：
+//1、可以访问类的私有成员
+//2、破坏了类的封装性和隐藏性
+//用途:运算符重载和某些软件设计时可以使用
+
+//向前声明
+class B{
+public:
+	B();
+	~B();
+	void foo();
+private:
+	int m_nPrivate;
+	void foo_2();
+};
+
+class A
+{
+public:
+	A() {
+		cout << "A construct" << endl;
+	}
+	~A() {
+		cout << "A deconstruct" << endl;
+	}
+	//foo是类A的朋友
+	friend void foo();
+	//B::foo是类A的朋友
+	friend void B::foo();
+	//类B是类A的朋友
+	friend B;
+private:
+	int m_nPrivate;
+};
+
+B::B() {
+
+}
+
+B::~B() {
+
+}
+
+void B::foo() {
+	A aObj;
+	aObj.m_nPrivate = 1;
+}
+
+void B::foo_2() {
+	A aObj;
+	aObj.m_nPrivate = 2;
+}
+
+void foo() {
+	A aObj;
+	aObj.m_nPrivate = 1;
+}
+
+int main() {
+	//两个对象是同一个，地址相同
+	//禁止拷贝构造可限制这样的声明
+	//Singleton test_singleton_2 = Singleton::creatObject();
+}
+  ```
+	
+	
+	
