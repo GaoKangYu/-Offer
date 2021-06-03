@@ -1396,5 +1396,59 @@ int main(){
   **33、静态成员函数static**
 	
   答：在头文件的函数名前面加上关键字static，函数内部不能访问普通成员变量，只能访问静态成员变量，本质上是静态成员函数内部没有this指针，是不依赖于对象的，可以直接通过类作用域符调用函数，带类域的全局函数。避免命名冲突，线程回调函数。
+
+  **34、单例模式**
 	
-  **33、友元函数**
+  答：单例模式：只有一个实例
+
+  ```C++
+	/*
+Day4
+单例模式：例如，创建一个唯一的日志实例
+*/
+
+/*
+思路：只允许有一个对象，因此使用static，只属于类，不属于对象，同时需要限制拷贝构造
+
+指针涉及到线程安全问题和释放问题，所以使用引用
+*/
+
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+class Singleton
+{
+public:
+	~Singleton() {
+		cout << "Singleton : destruct" << endl;
+		delete m_pObject;
+	}
+	//创建对象的唯一接口，静态
+	static Singleton& creatObject() {
+		static Singleton obj;
+		return obj;
+	}
+	//禁用拷贝构造
+	Singleton(Singleton& obj) = delete;
+
+private:
+	Singleton() {
+		cout << "Singleton : construct" << endl;
+	}
+	static Singleton* m_pObject;
+};
+
+Singleton* Singleton::m_pObject = nullptr;
+
+int main() {
+	//两个对象是同一个，地址相同
+	Singleton& test_singleton = Singleton::creatObject();
+	Singleton& test_singleton_1 = Singleton::creatObject();
+	//禁止拷贝构造可限制这样的声明
+	//Singleton test_singleton_2 = Singleton::creatObject();
+}
+  ```
+	
+  **35、友元函数**
