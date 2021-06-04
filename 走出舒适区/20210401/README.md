@@ -1538,3 +1538,134 @@ int main() {
 	
   答：
 	
+  1）成员函数中虚函数是否有多态性？
+	
+  有多态性，本质上是间接调用
+  ```C++
+	class cParent
+{
+public:
+	cParent() {
+
+	}
+	~cParent() {
+
+	}
+	//普通成员函数中，调用foo是否有多态性（间接调用）
+	//有多态性，此处为前面的知识点，发现为虚函数的时候，回去看是不是指针或者引用调用
+	//是，是间接调用，看指针或者引用是哪一个对象，是子类对象，因此对调用子类方法
+	void test() {
+		//本质上是this->foo();
+		foo();
+	}
+
+	virtual void foo() {
+		cout << "cParent::foo()" << endl;
+	}
+
+private:
+
+};
+
+class cChild : public cParent
+{
+public:
+	cChild() {
+
+	}
+	~cChild() {
+
+	}
+	void foo() {
+		cout << "cChild::foo" << endl;
+	}
+
+private:
+
+};
+
+
+int main() {
+	cParent* ptr = new cChild;
+	ptr->test();
+}
+
+  ```
+	
+  2）构造和析构函数中虚函数是否有多态性？
+
+  没有，而且是不安全的行为，1.在构造函数中调用虚函数，实际上是直接调用，没有多态；2.在构造函数中调用普通成员函数，该普通成员函数中有虚函数的间接调用，由于进入构造或析构时，会为对象赋值当前类的虚表，所以没有多态。
+	
+  ```C++
+	class cParent
+{
+public:
+	//构造函数是否有多态性？
+	//1.在构造函数中调用虚函数，实际上是直接调用，没有多态。
+	//2.在构造函数中调用普通成员函数，该普通成员函数中有虚函数的间接调用，由于进入构造时，会为对象赋值当前类的虚表，所以没有多态。
+	
+	//构造对象的时候会赋值当前类的虚表
+
+	//没有，是不安全的行为，对象构造的过程是先构造基类再构造派生类，因此在构造函数中调用虚函数是直接调用
+	//因此在运行到foo（）函数的时候，派生类还没有被创建，因此会调用父类的foo
+	//如果有多态性，那么会调用子类的foo，但是子类没有被创建，访问的是一个没有被正确初始化的地址，是不安全的。
+	//虽然是指针的格式，但是是直接调用
+	cParent() {
+		cout << "构造了一个cParent" << endl;
+		foo();
+		//如果使用test函数呢？还是调用父类的，骗不过编译器的
+		//本质上间接调用时看虚表的，这个时候子类的虚表还没建立呢
+		//test();
+	}
+	virtual ~cParent() {
+		cout << "析构了一个cParent" << endl;
+		foo();
+	}
+	void test() {
+		foo();
+	}
+
+	virtual void foo() {
+		cout << "cParent::foo()" << endl;
+	}
+
+private:
+
+};
+
+class cChild : public cParent
+{
+public:
+	cChild() {
+		cout << "构造了一个cChild" << endl;
+		foo();
+	}
+	~cChild() {
+		cout << "析构了一个cChild" << endl;
+		foo();
+	}
+	void foo() {
+		cout << "cChild::foo" << endl;
+	}
+
+private:
+
+};
+
+class Solution {
+public:
+	void test() {
+		cout << "test" << endl;
+	}
+};
+
+
+int main() {
+	//本质上是堆的生命周期是伴随着整个程序的
+	//单纯的new了要delete
+	cParent* ptr = new cChild;
+	ptr->test();
+	delete ptr;
+	return 0;
+}
+  ```
