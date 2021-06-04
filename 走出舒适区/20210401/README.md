@@ -1828,3 +1828,78 @@ int main() {
 	SBObj.use();
 }
   ```
+
+  **41、运算符重载**
+	
+  答：
+    
+  1.定义：重载已有运算符，赋予新功能
+	
+  2.特点：不破坏原有运算符功能；优先级不变；使用方式不变（参数个数）
+  
+  3.new 和 deletes是运算符，是可以重载的，不能重载的有：   .   ::   ?:   #
+	
+  ```C++
+  int main() {
+	//两个字符串拼接
+	std::string str = "hello";
+	str = str + "world";
+	//本质上是函数调用
+	str.operator+=("world");
+	//new 和 deletes是运算符，是可以重载的，不能重载的有：   .   ::   ?:   #
+	return 0;
+}
+  ```
+
+  **42、cin cout**
+	
+  答：
+	
+  1.cout本质上是ostream的对象
+  
+  2.cin本质上是istream的对象
+  
+  3.endl本质是一个函数
+  
+  4.<<本质上是运算符重载，重载了endl的函数指针
+	
+  **43、运算符重载测试**
+	
+  答：
+	
+  ```C++
+/*
+1.类成员的运算符重载
+2.友元全局的运算符重载
+*/
+
+#include <iostream>
+#include <vector>
+
+using namespace std;
+
+class CMystring {
+public:
+	//不加const不能操作const对象
+	CMystring& operator=(const char* psz) {
+		strcpy_s(m_szBuf, psz);
+		return *this;
+	}
+	//友元全局的运算符重载
+	friend ostream& operator<<(ostream& out, CMystring& str) {
+		out << str.m_szBuf;
+		return out;
+	}
+private:
+	char m_szBuf[256];
+};
+
+
+int main() {
+	CMystring str;
+	CMystring str2;
+	str2 = str = "hello world";
+	cout << str2 << "123" << endl;
+	return 0;
+}
+  ```
