@@ -1904,7 +1904,7 @@ int main() {
 }
   ```
 
-  44、转换运算符
+  **44、转换运算符**
 	
   答：
   
@@ -1946,6 +1946,38 @@ int main() {
 	//如果没有转换运算符，需要重载+
 	//如果重载了+，则进入优先级更高的+
 	objN = objN + 1;
+	return 0;
+}
+  ```
+
+  **45、函数模板**
+	
+  答：模板：把某些类型关键字看成变量；函数不产生，模板不起作用
+  ```C++
+  template<typename T>
+T GetMin(T a, T b) {
+	return a > b ? b : a;
+}
+
+//模板特例化，定义
+template<>
+const char* GetMin<const char*>(const char* a, const char* b) {
+	//简略实现
+	return a;
+}
+
+int main() {
+	//函数模板的隐式实例化（由编译器猜测函数模板的类型）
+	int n_int =GetMin(1, 1);
+	int n_float = GetMin(1.0f, 1.0f);
+	//报错二义性
+	//int n_chaos = GetMin(1, 2.0f);
+
+	//因此需要显式实例化
+	GetMin<int>(1, 2.0f);
+
+	//模板特例化，调用
+	GetMin<const char*>("hello", "world");
 	return 0;
 }
   ```
