@@ -1903,3 +1903,49 @@ int main() {
 	return 0;
 }
   ```
+
+  44、转换运算符
+	
+  答：
+  
+  ```C++
+class CInt {
+public:
+	CInt(int val) {
+		m_int = val;
+	}
+	//前缀++
+	CInt operator++() {
+		return ++m_int;
+	}
+	//后缀++
+	CInt operator++(int) {
+		return m_int++;
+	}
+	//new是一种运算符
+	void* operator new(size_t cb) {
+		return new char[cb];
+	}
+	//转换运算符
+	operator int() {
+		return m_int;
+	}
+	int operator+(int n) {
+		return m_int + n;
+	}
+private:
+	int m_int;
+};
+
+
+int main() {
+	CInt objN(1);
+	++objN;
+	objN++;
+	CInt* p = new CInt(123);
+	//如果没有转换运算符，需要重载+
+	//如果重载了+，则进入优先级更高的+
+	objN = objN + 1;
+	return 0;
+}
+  ```
