@@ -1981,3 +1981,59 @@ int main() {
 	return 0;
 }
   ```
+
+  **46、类模板**
+	
+  答：
+  ```C++
+  //.h文件
+#pragma once
+//类模板经典写法
+template<typename T>
+class CTest
+{
+public:
+	CTest& foo(CTest& obj);
+	T Get() {
+		return m_nInt;
+	}
+private:
+	T m_nInt;
+};
+
+//template作用域，缺一不可
+template<typename T>
+CTest<T>& CTest<T>::foo(CTest<T>& obj) {
+	return*this;
+}
+
+//类模板的特例
+template<>
+const char* CTest<const char*>::Get() {
+	return "hello";
+}
+	
+	
+  //.cpp文件
+  #include <iostream>
+#include <vector>
+#include "Template_class.h"
+
+using namespace std;
+
+
+int main() {
+	//类模板必须显示实例化，放在头文件里（通常不编译）
+
+	//非特例
+	CTest<int> t_0;
+	int n = t_0.Get();
+	cout << "n = " << n << endl;
+	//类模板成员函数特例
+	CTest<const char*> t;
+	const char* p = t.Get();
+	cout << p << endl;
+	return 0;
+}
+
+  ```
