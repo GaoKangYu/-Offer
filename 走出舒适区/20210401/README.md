@@ -1673,4 +1673,158 @@ int main() {
 	
   **38、纯虚函数与抽象类**
 	
-  答：存在很多动物，有鱼有鸟，但没有“动物”，动物只是一个抽象概括，没有实体，对应纯虚函数，抽象类，接口类，即父类只是为了给子类提供接口。
+  答：存在很多动物，有鱼有鸟，但没有“动物”，动物只是一个抽象概括，没有实体，对应纯虚函数，抽象类，即父类只是为了给子类提供接口。
+
+  `virtual void test() = 0;`在虚函数后加`= 0`，表示纯虚函数，不需要实现，如果纯虚函数没有实现，那么包含这个纯虚函数的类是抽象类，不能被实例化。
+
+  纯虚析构：纯虚析构一定要有实现`virtual void test() = 0{ ... };`
+	
+  接口类：只是该类作为父类，规范子类对外使用的接口（某些函数，可以是虚函数，不一定包含纯虚函数）
+	
+  抽象类：一定包含某个纯虚函数，并且没有被实现
+	
+  **39、多重继承**
+	
+  答：尽量使用组合，而不是多重继承，因为容易出现菱形继承。
+	
+  ```C++
+	class Sofa {
+public:
+	Sofa() {
+		cout << "Sofa::construct" << endl;
+	}
+	~Sofa() {
+		cout << "Sofa::deconstruct" << endl;
+	}
+	void sit() {
+		cout << "Can sit" << endl;
+	}
+private:
+	int m_length = 2;
+};
+
+class Bed {
+public:
+	Bed() {
+		cout << "Bed::construct" << endl;
+	}
+	~Bed() {
+		cout << "Bed::deconstruct" << endl;
+	}
+	void sleep() {
+		cout << "Can sleep" << endl;
+	}
+private:
+	int m_length = 1;
+};
+
+//多重继承
+//可以使用组合，即把类对象作为Sofa_Bed的成员
+class Sofa_Bed : public Sofa, public Bed{
+public:
+	Sofa_Bed() {
+		cout << "Sofa_Bed::construct" << endl;
+	}
+	~Sofa_Bed() {
+		cout << "Sofa_Bed::deconstruct" << endl;
+	}
+};
+
+int main() {
+	//创建沙发对象
+	Sofa_Bed SBObj;
+	SBObj.sit();
+	SBObj.sleep();
+	cout << "sizeof(SBObj) = " << sizeof(SBObj) << endl;
+	//指针转换
+	Sofa* pSofa = &SBObj;
+	Bed* pBed = &SBObj;
+}
+  ```
+
+**40、菱形继承与解决方法**
+  
+  答：A派生BC，D多重继承BC，会出现调用不明确问题，同时因为创建一个D的实例时，会带有两份A的变量，此为语法缺陷，为解决这个问题，使用虚继承，这样这两份变量的地址就是一样的了。因此，多用组合，少用多重继承。
+	
+  ```C++
+	class Furniture {
+public:
+	Furniture() {
+		cout << "Furniture::construct" << endl;
+	}
+	~Furniture() {
+		cout << "Furniture::deconstruct" << endl;
+	}
+	void use() {
+		cout << "Furniture Can use" << endl;
+	}
+	int m_furniture;
+};
+
+class Sofa : virtual public Furniture {
+public:
+	Sofa() {
+		cout << "Sofa::construct" << endl;
+	}
+	~Sofa() {
+		cout << "Sofa::deconstruct" << endl;
+	}
+	void sit() {
+		cout << "Can sit" << endl;
+	}
+	void use() {
+		cout << "Sofa Can use" << endl;
+	}
+private:
+	int m_length = 2;
+};
+
+class Bed : virtual public Furniture {
+public:
+	Bed() {
+		cout << "Bed::construct" << endl;
+	}
+	~Bed() {
+		cout << "Bed::deconstruct" << endl;
+	}
+	void sleep() {
+		cout << "Can sleep" << endl;
+	}
+	void use() {
+		cout << "Bed Can use" << endl;
+	}
+private:
+	int m_length = 1;
+};
+
+//多重继承
+//可以使用组合，即把类对象作为Sofa_Bed的成员
+class Sofa_Bed : public Sofa, public Bed{
+public:
+	Sofa_Bed() {
+		cout << "Sofa_Bed::construct" << endl;
+	}
+	~Sofa_Bed() {
+		cout << "Sofa_Bed::deconstruct" << endl;
+	}
+	void use() {
+		cout << "Sofa_Bed Can use" << endl;
+	}
+};
+
+int main() {
+	//创建沙发对象
+	Sofa_Bed SBObj;
+	SBObj.sit();
+	SBObj.sleep();
+	cout << "sizeof(SBObj) = " << sizeof(SBObj) << endl;
+	//报错访问不明确，因为多重继承的BC类中都含有一个m_furniture
+	//SBObj.m_furniture = 1;
+	//正确调用方法
+	SBObj.Sofa::m_furniture = 1;
+	SBObj.Bed::m_furniture = 1;
+	//但本质上，一个沙发床实体，应该只有一份变量，但是多重继承造成了两份变量，是语法缺陷
+	//为弥补此缺陷，提出了虚继承
+	SBObj.use();
+}
+  ```
