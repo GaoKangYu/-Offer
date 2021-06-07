@@ -2268,3 +2268,27 @@ private:
 
 };
   ```
+
+  **5、强制转换**
+	
+  答：
+	
+  `const_cast`：只针对指针，引用，this指针，用于去除常量属性
+  ```C++
+  const int n = 5;
+  int* k = const_cast<int*>(&n);
+  *k = 123;
+  int &kRef = const_cast<int&>(n);
+  kRef = 456;
+  ```
+	
+  `static_cast`
+  ```C++
+  int n = 5;
+  float f = 10.0f;
+  //本质上发生了隐式转换
+  //f = n;
+  f = static_cast<float>(n);
+  //低风险的转换：整型与浮点型，字符与整型，void*指针的转换，子类转父类
+  ```
+  `const_cast`
