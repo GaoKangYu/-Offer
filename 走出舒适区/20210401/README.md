@@ -2146,3 +2146,125 @@ int main()
 	}
 }
   ```
+
+  **4、委托构造与继承构造**
+
+  答：
+	
+  ```
+class Base
+{
+public:
+	int value_1;
+	int value_2;
+	float value_3;
+	Base() {
+		value_1 = 1;
+	}
+	Base(float _value_3) {
+		value_3 = _value_3;
+	}
+	Base(int _vaule_2, float _value_3) : Base(_value_3){
+		value_2 = _vaule_2;
+	}
+	Base(int _vaule_2) : Base() {
+		//委托Base()构造函数初始化value_1
+		value_2 = _vaule_2;
+	}
+	~Base() {
+
+	}
+
+private:
+
+};
+
+class SubClass : public Base
+{
+public:
+	//直接使用父类的构造
+	using Base::Base;
+
+private:
+	
+};
+
+
+int main()
+{
+	SubClass stest(1);
+	cout << stest.value_1 << endl;
+	cout << stest.value_2 << endl;
+}
+  ```
+  
+  **5、overide final default delete**
+	
+  答：
+
+  ```C++
+  #include <iostream>
+using namespace std;
+
+//overide_final_default_delete
+//2、final
+//对于类的用法：不希望该类被其他类继承
+//对于虚函数的用法：不希望虚函数再被重写
+//3、default
+//Base() = default，希望编译器产生默认构造，Base() = delete，不希望编译器产生默认构造
+
+class Base
+{
+public:
+	Base() {
+		cout << "Base::Construct" << endl;
+	}
+	virtual void foo(){
+		cout << "Base::foo" << endl;
+	}
+	~Base() {
+		cout << "Base::Deconstruct" << endl;
+	}
+
+private:
+
+};
+
+//不希望该类被其他类继承
+//class SubClass final : public Base
+class SubClass : public Base
+{
+public:
+	SubClass() {
+		cout << "SubClass::Construct" << endl;
+	}
+	//显示说明该函数是虚函数而且重写了父类的虚函数，可以起到一个显示的提醒作用
+	void foo() override {
+		cout << "SubClass::foo" << endl;
+	}
+	~SubClass() {
+		cout << "SubClass::Deconstruct" << endl;
+	}
+
+private:
+
+};
+
+class SubClass_2 : public SubClass
+{
+public:
+	SubClass_2() {
+		cout << "SubClass_2::Construct" << endl;
+	}
+	//显示说明该函数是虚函数而且重写了父类的虚函数，可以起到一个显示的提醒作用
+	void foo() override {
+		cout << "SubClass_2::foo" << endl;
+	}
+	~SubClass_2() {
+		cout << "SubClass_2::Deconstruct" << endl;
+	}
+
+private:
+
+};
+  ```
