@@ -2055,3 +2055,94 @@ int main() {
 	cout << "error" << endl;
   }
   ```
+
+  *C++11新特性*
+	
+  **1、NULL与nullptr**
+  
+  答：nullptr表示空指针，本质还是0，但具备了类型；NULL相当于宏
+
+  ```C++
+void foo(char* p) {
+	std::cout << "char*" << std::endl;
+}
+
+void foo(int n) {
+	std::cout << "int" << std::endl;
+}
+
+void foo(int* n) {
+	std::cout << "int*" << std::endl;
+}
+
+int main()
+{
+	//会调用int的foo，因为本质是宏，值为0
+	foo(NULL);
+	//会调用char*的foo，可以强转类型
+	foo((char*)NULL);
+	//会调用int*的foo，nullptr表示空指针，本质还是0，但具备了类型，如果去掉int*会报错出现二义性，可以强转类型
+	foo((int*)nullptr);
+}
+  ```
+	
+  **2、constexptr**
+	
+  答：
+	
+  1、局部变量在栈上开辟空间（在编译进行）
+	
+  ```C++
+  constexpr int len_foo(){
+	//vs编辑器里constexpr里不支持if else
+	return 5;
+  }
+  ...
+  //加一个const能解决问题
+  int len = 5;
+  //错误，两个局部变量都在编译阶段开辟了空间，变量在运行期间可以改变，编译器在运行期间无法确定len的值
+  char arr[len];
+  //const关键字下，仍非法，不明确是不是常量表达式，foo的const改成constexpr
+  char arr_1[len_foo() + 5];
+  ```
+  
+  **3、迭代器及类型推导**
+  
+  答：
+	
+  1、普通数组一旦申请不能再扩容（在栈上），vector是动态数组（在堆上），会根据当前数组使用情况进行动态扩容，cpp11标准下，尽量使用arry（`std::arr<int, 3> t = {1,2,3}`），为固定大小数组，相比普通数组还支持迭代器访问、获取容量、获得原始指针等操作。
+	
+  2、使用迭代器可以不管不同数据结构内存结构
+  
+  ```C++
+  #include <iostream>
+#include <vector>
+#include <string>
+#include <array>
+#include <list>
+
+int main()
+{
+	std::array<int, 5> t = { 12,1,1,1,1 };
+	std::vector<int> vec{ 1,2,3,4,5 };
+	std::vector<int>::iterator it;
+	for (it = vec.begin(); it != vec.end(); ++it) {
+		std::cout << *it << std::endl;
+	}
+	std::list<std::string> test{"hello1", "hello2"};
+	for (std::list<std::string>::iterator it2 = test.begin(); it2 != test.end(); ++it2) {
+		std::cout << *it2 << std::endl;
+	}
+	std::cout << "auto" << std::endl;
+    //auto：类型推导关键字
+	for (auto it2 = test.begin(); it2 != test.end(); ++it2) {
+		std::cout << *it2 << std::endl;
+	}
+
+	std::cout << "进化" << std::endl;
+	//auto：类型推导关键字
+	for (auto it2 : test) {
+		std::cout << it2 << std::endl;
+	}
+}
+  ```
