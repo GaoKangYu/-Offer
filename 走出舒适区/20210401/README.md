@@ -2291,4 +2291,88 @@ private:
   f = static_cast<float>(n);
   //低风险的转换：整型与浮点型，字符与整型，void*指针的转换，子类转父类
   ```
-  `const_cast`
+  `dynamic_cast`:需要转换的地方显示声明，能检测出不安全的转换，本质上是在运行时检测转换是否安全，如果不安全，直接把转换置空。使用dynamic_cast的前提：必须要有虚函数。
+  ```C++
+  //父类转子类，不安全，dynamic_cast能在运行时刻检测出被转换的指针的类型，运行时RTTI技术
+  //有额外开销，一般而言只有在向下转换的时候必须使用
+  pSon = dynamic_cast<CSon*>(pFather);
+  ```
+
+  `reinterpret_cast`:显示强转，用于转换各种高危险的转换方式，不存在检查
+	
+  ```
+  int* p = reinterpret_cast<int*>(n);
+  ```
+  **6、lambda表达式与匿名函数**
+	
+  答：lambda表达式就是匿名函数（没有名字的函数），可以内外嵌套，一般不用明确返回类型，用auto，需要说明的时候使用->。
+  
+  ```
+  //[捕获列表] (参数列表) -> 返回值{函数体}(参数1,参数2,...);后面加括号直接调用
+  int c = [](int a, int b) -> int{
+	return a + b;
+  }(1,2);
+  cout << c << endl;
+  //函数式编程，多线程、并发问题常用，对多核程序友好
+  auto f = [](int a, int b){
+	return a + b;
+  };
+  c = f(1,3);
+  cout << c << endl;
+	
+  auto f = [](int n){
+	return [n](int x){
+	  return n+x;
+	};
+  };
+  c = f(1)(2);
+  cout << c << endl;
+  ```
+  mutable
+	
+  ```
+  int t = 10;
+  //函数体内部使用函数外部的值
+  //按值捕获，内部的t不论怎么修改，也不会影响外部的值，只在当前匿名函数作用域有效，是一份拷贝
+  auto f = [t]() mutable {
+	return ++t;
+  };
+  c = f(1)(2);
+  cout << c << endl;
+  ```
+	
+  捕获列表，按值捕获
+    ```
+  int t = 10;
+  auto f = [t]() mutable {
+	cout << t << endl;
+  };
+  t = 11;
+  f();
+  //结果仍未10，捕获的是声明匿名函数时，捕获列表参数的值
+  //按引用捕获：改变的是同一个值
+  //[=]按值捕获所有变量
+  //[&]按引用捕获所有变量
+  auto f2 = [&t](){
+	cout << t << endl;
+        t = 13;	
+  };
+  t = 11;
+  f2();
+  cout << t << endl;
+  ```
+  应用：
+  ```
+  int main(){
+	vector<int> v = {1,2,3,4,5};
+	for_each(v.begin(), v.end(), [&](int n){
+	    if(n % 2 == 0){
+		cout << n << "是偶数" << endl;
+	}
+	else{
+	        cout << n << "是奇数" << endl;
+	}
+	});
+  }
+  ```
+  
