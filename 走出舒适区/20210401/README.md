@@ -2342,7 +2342,8 @@ private:
   ```
 	
   捕获列表，按值捕获
-    ```
+  
+  ```
   int t = 10;
   auto f = [t]() mutable {
 	cout << t << endl;
@@ -2360,9 +2361,8 @@ private:
   t = 11;
   f2();
   cout << t << endl;
-  ```
-  应用：
-  ```
+
+  //应用
   int main(){
 	vector<int> v = {1,2,3,4,5};
 	for_each(v.begin(), v.end(), [&](int n){
@@ -2376,3 +2376,56 @@ private:
   }
   ```
   
+  **7、函数对象包装器**
+	
+  答：为函数提供了一种容器
+
+      `bind`
+
+  ```
+  class Test{
+  public:
+	int test(int n){
+		cout << n << endl;
+		return n;
+	}
+	int operator()(int n){
+		cout << n << endl;
+		return n;
+	}
+};
+  int test(int n){
+      cout << n << endl;
+      return n;
+  }
+	
+  void add(int a, int b, int c){
+      cout << a << b << c << endl;
+	}
+  
+  int main(){
+	//支持四种函数的封装：普通函数、匿名函数、类成员函数、仿函数（重载了运算符的函数）
+	std::function<int(int)> f = test;
+	//匿名函数
+	std::function<int(int)> f2 = [](int n) -> int{
+		cout << n << endl;
+		return n;
+	};
+	//类内成员函数
+	std::function<int(Test*, int)> f3 = &Test::test;
+	f(123);
+	f2(456);
+	Test t;
+	f3(&t, 789);
+	std::function<int(Test*, int)> f4 = &Test::opreator();
+	t(123);
+	f4(&t, 897);
+	
+	auto a = std::bind(add, 1, 2, 3);
+	a();
+	auto foo2 = std::bind(add, std::placeholders::_2, std::placeholders::_1, 3);
+	//比默认参数更灵活，写的参数只替换占位符placeholder
+	foo2(1,2);
+	return 0;
+}
+  ```
